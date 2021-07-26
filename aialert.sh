@@ -131,10 +131,6 @@ function aialert {
 }
 
 function loopy {
-
-  # Get config
-  . aialert.conf
-
   # Startup with a random Deepstack AI endpoint
   DSAISERVNUM=$((0 + $RANDOM % ${#DSAISERVERLIST[@]}))
 
@@ -151,9 +147,6 @@ function loopy {
     if (( $DSAISERVNUM >= ${#DSAISERVERLIST[@]} )); then
       DSAISERVNUM=0
     fi
-
-    # Get config again.  This lets us change the config while the script is running
-    . aialert.conf
   done &
 }
 
@@ -180,6 +173,13 @@ rm -f *.jpg
 rm -f *.json
 rm -f *_p.bmp
 rm -f *_m.bmp
+
+# Get config
+. aialert.conf
+
+echo $CCID
+echo $TGBOT
+echo $SRID
 
 #Cabin Creek
 loopy ipcamg1 100 100 -1 $CCID $TGBOT 1 30 5 1 0 0 1
