@@ -177,10 +177,6 @@ rm -f *_m.bmp
 # Get config
 . aialert.conf
 
-echo $CCID
-echo $TGBOT
-echo $SRID
-
 #Cabin Creek
 loopy ipcamg1 100 100 -1 $CCID $TGBOT 1 30 5 1 0 0 1
 loopy ipcamg2 100 100 -1 $CCID $TGBOT 1 30 5 1 0 0 1
