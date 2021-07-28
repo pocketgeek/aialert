@@ -71,9 +71,6 @@ function isdetectiondifferent {
     # Copy current to new previous file
     cp "$CAMERA".bmp "$CAMERA"_p.bmp
 
-    # Convert back to jpg
-    convert "$CAMERA".bmp "$CAMERA".jpg
-    
     echo 1 # yes
   else
     echo 0 # no
@@ -87,8 +84,9 @@ function detect {
   rm -f "$CAMERA".bmp
   wget "http://$BISERVER/image/$CAMERA?user=$BIUSER&pw=$BIPW&q=$BISSQ&s=$BISSS&decode=$BISID" -O "$CAMERA".jpg > /dev/null 2>&1
 
-  # Convert to bmp
+  # Convert to bmp and remove jpg
   convert "$CAMERA".jpg "$CAMERA".bmp
+  rm -f "$CAMERA".jpg
 
   # Add mask if it exists
   if [ -f "$CAMERA"_mask.txt ]; then
@@ -146,6 +144,9 @@ function detect {
           # Draw text
           convert "$CAMERA".bmp -font helvetica -pointsize 18 -draw "text $X_MIN,$Y_MIN '"$LABEL" "$CONFIDENCE"%'" "$CAMERA".bmp
 
+          # Convert back to jpg
+          convert "$CAMERA".bmp "$CAMERA".jpg
+    
           # Alerts that fire on every detection
           # {
           if (( $BIALERT == 1 )); then
